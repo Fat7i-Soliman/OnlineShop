@@ -1,4 +1,5 @@
 import 'package:e_commerce/screens/admin/admin_page.dart';
+import 'package:e_commerce/screens/user_page.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
@@ -65,11 +66,19 @@ class _LoginScreenState extends State<LoginScreen> {
               loading = false;
             });          }
         } else {
-          try {
-            final result = await auth.logIn(email, pass);
-            setState(() {
-              loading = false;
-            });
+          if (!email.contains('eshop.com')){
+            try {
+              await auth.logIn(email, pass).then((value) =>
+              {
+
+                setState(() {
+                  loading = false;
+                }),
+
+                Navigator.pushNamed(context, UserPage.id)
+              }
+              );
+
             // navigate to user account
 
           } catch (ex) {
@@ -77,6 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
               loading = false;
             });
             showSnack(ex.message);
+          }
+        }else{
+            showSnack('that is an admin account!');
           }
         }
       }

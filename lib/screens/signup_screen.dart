@@ -1,5 +1,6 @@
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/login_screen.dart';
+import 'package:e_commerce/screens/user_page.dart';
 import 'package:e_commerce/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -88,11 +89,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                         try {
                           _globalKey.currentState.save();
-                          final result = await auth.signUp(email, pass);
-
+                           auth.signUp(email, pass).then((value) => {
                           setState(() {
-                            loading = false ;
+                          loading = false ;
+                          }),
+
+                            Navigator.pushNamed(context, UserPage.id)
                           });
+
                         }catch(ex){
                           setState(() {
                             loading = false ;

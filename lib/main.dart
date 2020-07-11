@@ -4,6 +4,7 @@ import 'package:e_commerce/screens/admin/edit_page.dart';
 import 'package:e_commerce/screens/admin/edit_priduct.dart';
 import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
+import 'package:e_commerce/screens/user_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +24,8 @@ debugShowCheckedModeBanner: false,
         AdminPage.id : (context)=> AdminPage(),
         AddProduct.id : (context)=> AddProduct(),
         EditProduct.id:(context)=> EditProduct(),
-        EditPage.id : (context) => EditPage()
+        EditPage.id : (context) => EditPage(),
+        UserPage.id : (context)=> UserPage()
       },
 
     );
