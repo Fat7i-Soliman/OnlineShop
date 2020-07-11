@@ -1,5 +1,6 @@
 import 'package:e_commerce/screens/admin/add_product.dart';
 import 'package:e_commerce/screens/admin/admin_page.dart';
+import 'package:e_commerce/screens/admin/edit_page.dart';
 import 'package:e_commerce/screens/admin/edit_priduct.dart';
 import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
@@ -15,13 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: LoginScreen.id,
-
+debugShowCheckedModeBanner: false,
       routes: {
         LoginScreen.id: (BuildContext context)=> LoginScreen(),
         SignUpScreen.id: (context) => SignUpScreen(),
         AdminPage.id : (context)=> AdminPage(),
         AddProduct.id : (context)=> AddProduct(),
-        EditProduct.id:(context)=> EditProduct()
+        EditProduct.id:(context)=> EditProduct(),
+        EditPage.id : (context) => EditPage()
       },
 
     );

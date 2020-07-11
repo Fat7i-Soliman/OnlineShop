@@ -3,24 +3,32 @@ class CustumTextField extends StatelessWidget {
   String hint ;
   IconData icon ;
   Function onClick ;
+  String txt ;
+  final _controller  = TextEditingController();
 
-  CustumTextField({@required this.onClick,@required this.hint,@required this.icon});
+  CustumTextField({@required this.onClick,@required this.hint,@required this.icon,this.txt});
 
   @override
   Widget build(BuildContext context) {
+
+    if(txt!=null){
+      _controller.text = txt ;
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25,),
       child: TextFormField(
+        controller:txt!=null? _controller: null,
         validator: (value){
           if(value.isEmpty){
             return 'Field is empty';
+          }else{
+            _controller.text = value ;
           }
           // ignore: missing_return
         },
         onSaved: onClick,
         obscureText: hint =='Enter Password'? true :false ,
         decoration: InputDecoration(
-
             hintText: hint,
             prefixIcon: Icon(icon,color: Colors.blueGrey,),
             filled: true,

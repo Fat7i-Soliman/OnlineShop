@@ -10,14 +10,25 @@ class Store{
     });
   }
 
-  Stream<QuerySnapshot>getProducts() {
-    return store.collection(productsCollection)
+  Stream<QuerySnapshot>getProducts()  {
+    return  store.collection(productsCollection)
+
         .snapshots();
   }
 
+  deleteProduct(String id){
+    store.collection(productsCollection).document(id).delete();
+  }
 
-  Product toObject(Map<String,dynamic> map){
+  editProduct(product,id) {
+    store.collection(productsCollection).document(id).updateData(product.toMap()).catchError((error){
+      print('edit error: ${error.message}');
+
+    });
+  }
+  Product toObject(Map<String,dynamic> map,String productId){
     Product ob  = Product(
+      id: productId,
       name: map[productsName],
       description : map[productDescription],
       price : map[productPrice],
