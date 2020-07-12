@@ -18,7 +18,7 @@ class _UserPageState extends State<UserPage> {
             Container(
               height: 450,
               decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage('images/cover.jpg'),fit: BoxFit.fill),
+                image: DecorationImage(image: AssetImage('images/shopping-market.jpg'),fit: BoxFit.fill),
               ),
               child: Container(
                 decoration: BoxDecoration(
@@ -30,7 +30,7 @@ class _UserPageState extends State<UserPage> {
                 ),
 
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,23 +55,63 @@ class _UserPageState extends State<UserPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Categories',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
-                      Text('All',style: TextStyle(color: Colors.black),)
+                      Text('Men Categories',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                      Text('All ',style: TextStyle(color: Colors.black),)
 
                     ],
                   ),
                   SizedBox(height: 10,),
                   Container(
-                    height: 150,
+                    height: 170,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        createCategory('T-shirt','images/cat1.jpg'),
-                        createCategory('shirts','images/cat1.jpg'),
-                        createCategory('sweaters','images/cat1.jpg'),
-                        createCategory('jackets','images/cat1.jpg'),
-                        createCategory('Shorts & Pants','images/cat1.jpg'),
-                        createCategory('shoes','images/cat1.jpg'),
+                        createCategory('T-shirt','images/t-shirt.jpg'),
+                        createCategory('Shirts','images/shirt1.jpg'),
+                        createCategory('Sweaters','images/sweater.png'),
+                        createCategory('Jackets','images/jacket.png'),
+                        createCategory('Shorts & Pants','images/pants.png'),
+                        createCategory('Blazers','images/blazer.png'),
+                        createCategory('Sunglasses','images/glasses.webp'),
+                        createCategory('Shoes','images/shoe.jpg'),
+
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 10, child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Divider(thickness: 3,),
+            ),),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Women Categories',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                      Text('All ',style: TextStyle(color: Colors.black),)
+
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    height: 170,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        createCategory('Blouses','images/blouse.jpg'),
+                        createCategory('Dresses','images/dress.jpeg'),
+                        createCategory('Skirts & Pants','images/women-pants.webp'),
+                        createCategory('Blazers','images/women-plazer.webp'),
+                        createCategory('shoes','images/women-shoe.webp'),
+                        createCategory('Bags & Accessories','images/bags.jpeg'),
+                        createCategory('Beauty','images/bag.jpeg'),
+
+
 
                       ],
                     ),
@@ -79,6 +119,7 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
             )
+
 
           ],
         ),
@@ -93,7 +134,7 @@ class _UserPageState extends State<UserPage> {
       child: Container(
         margin: EdgeInsets.only(right: 20),
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(image),fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage(image),fit: BoxFit.cover),
             borderRadius: BorderRadius.circular(20)
         ),
         child: Container(

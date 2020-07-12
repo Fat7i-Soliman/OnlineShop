@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             showSnack(ex.message);
           }
         }else{
+            loading = false;
             showSnack('that is an admin account!');
           }
         }
@@ -162,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     ],
                   ),
-                  SizedBox(height: height*.01,),
+                  SizedBox(height: height*.1,),
                   GestureDetector(
                     onTap: (){
                       setState(() {
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                         isAdmin==false?'I\'m an admin ': 'I\'m a user',
-                      style: TextStyle(color: Colors.white ,fontSize: 18),
+                      style: TextStyle(color: Colors.black ,fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
                   ),
