@@ -1,7 +1,7 @@
 import 'package:e_commerce/firebase/store.dart';
 import 'package:e_commerce/models/global_productID.dart';
 import 'package:e_commerce/models/product.dart';
-import 'package:e_commerce/screens/admin/edit_priduct.dart';
+import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:e_commerce/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

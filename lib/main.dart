@@ -1,7 +1,7 @@
 import 'package:e_commerce/screens/admin/add_product.dart';
 import 'package:e_commerce/screens/admin/admin_page.dart';
 import 'package:e_commerce/screens/admin/edit_page.dart';
-import 'package:e_commerce/screens/admin/edit_priduct.dart';
+import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/screens/user_page.dart';

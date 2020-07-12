@@ -1,5 +1,5 @@
 import 'package:e_commerce/screens/admin/add_product.dart';
-import 'package:e_commerce/screens/admin/edit_priduct.dart';
+import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class AdminPage extends StatefulWidget {

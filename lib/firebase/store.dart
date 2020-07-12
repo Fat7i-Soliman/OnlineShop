@@ -5,14 +5,11 @@ class Store{
   final store = Firestore.instance ;
 
   addProduct(Product product) async {
-   await store.collection(productsCollection).add(product.toMap()).whenComplete(() => print('added')).catchError((error){
-      print(error.message);
-    });
+   await store.collection(productsCollection).document('allCategories').collection(product.category).add(product.toMap());
   }
 
-  Stream<QuerySnapshot>getProducts()  {
-    return  store.collection(productsCollection)
-
+  Stream<QuerySnapshot>getProducts(category)  {
+    return  store.collection(productsCollection).document('allCategories').collection(category)
         .snapshots();
   }
 

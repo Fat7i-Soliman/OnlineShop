@@ -4,6 +4,7 @@ const productPrice= 'productPrice';
 const productDescription= 'productDescription';
 const productCategory= 'productCategory';
 const productImage= 'productImage';
+const productGender = 'productGender';
 const t_shirt = 't-shirt';
 const shirt = 'shirt';
 const sweaters = 'sweaters';

@@ -11,6 +11,7 @@ class Product{
       productsName:name,
       productPrice:price,
       productDescription:description,
+      productGender:gender,
       productCategory:category,
       productImage:image
     };

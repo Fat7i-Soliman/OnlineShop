@@ -130,6 +130,7 @@ class _AddProductState extends State<AddProduct> {
                                   name: name,
                                   description: des,
                                   price: price,
+                                  gender: genderValue,
                                   category: category,
                                   image: image
                               ));
