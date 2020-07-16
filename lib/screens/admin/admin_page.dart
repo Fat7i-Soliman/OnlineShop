@@ -1,7 +1,9 @@
+import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/admin/add_product.dart';
 import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../login_screen.dart';
 class AdminPage extends StatefulWidget {
 
   static String id = 'AdminPage';
@@ -39,10 +41,43 @@ class _AdminPageState extends State<AdminPage> {
                 child: Text('View Orders'),
               ),
               SizedBox(height: 20,),
+              RaisedButton(
+                onPressed: ()=> showAlertDialog(context),
+                child: Text('Log out'),
+              ),
 
             ],
           )
       ),
+    );
+
+
+  }
+
+  logOut(context){
+    Auth().auth.signOut().then((value) => Navigator.pushNamedAndRemoveUntil(context, LoginScreen.id, (route) => false));
+  }
+
+
+
+  Future showAlertDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text('Log Out !'),
+          content: Text('Are you sure you want to exit ?'),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  logOut(context);
+                },
+                child: Text('Log out')),
+            FlatButton(onPressed: () {
+              Navigator.pop(context);
+            }, child: Text('cancel')),
+
+          ],
+        )
     );
   }
 }

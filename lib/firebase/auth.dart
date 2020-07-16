@@ -1,3 +1,4 @@
+import 'package:e_commerce/models/user.dart';
 import 'package:e_commerce/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,11 @@ class Auth{
     return result ;
   }
 
-  Future<FirebaseUser> currentUser() async{
-    final res =auth.currentUser();
-    return res ;
+  User currentUser (FirebaseUser user)  {
+    return user!=null ? User(id: user.uid) : null ;
   }
 
+  Stream<User> get user {
+    return auth.onAuthStateChanged.map((event) => currentUser(event));
+  }
 }

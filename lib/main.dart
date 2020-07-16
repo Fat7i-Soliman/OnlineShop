@@ -1,4 +1,6 @@
+import 'package:e_commerce/Wrapper.dart';
 import 'package:e_commerce/firebase/auth.dart';
+import 'package:e_commerce/models/user.dart';
 import 'package:e_commerce/provider/cart_items.dart';
 import 'package:e_commerce/screens/admin/add_product.dart';
 import 'package:e_commerce/screens/admin/admin_page.dart';
@@ -9,14 +11,18 @@ import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/screens/users/cart_screen.dart';
 import 'package:e_commerce/screens/users/details_screen.dart';
 import 'package:e_commerce/screens/users/single_category.dart';
-import 'file:///C:/Users/Fat7y/IdeaProjects/e_commerce/lib/screens/users/user_page.dart';
+import 'package:e_commerce/screens/users/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_splash/custom_splash.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
+      StreamProvider<User>.value(
+          value: Auth().user,
+      ),
       ChangeNotifierProvider<CartItems>(create: (context)=> CartItems())
     ],
     child: MaterialApp(
@@ -44,41 +50,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Auth _auth ;
-
-  Map<String, Widget> op = {'null': LoginScreen(), 'admin': AdminPage(),'user':UserPage()};
-
-  checkUser()async {
-    _auth = Auth();
-    await _auth.currentUser().then((value) {
-//      if (value == null) {
-//        setState(() {
-//          _state = 'null';
-//        });
-//
-//      } else {
-//        var mail = value.email;
-//        if (mail == 'admin1@eshop.com') {
-//          setState(() {
-//            _state = 'admin';
-//
-//          });
-//        } else {
-//          setState(() {
-//            _state = 'user';
-//          });
-//        }
-//      }
-    }
-    );
-  }
 
 
-  @override
-  void initState() {
-    //checkUser();
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -87,7 +61,7 @@ class _MainPageState extends State<MainPage> {
       backGroundColor: Colors.blueGrey,
       animationEffect: 'zoom-in',
       logoSize: 100,
-      home:LoginScreen() ,
+      home: Wrapper(),
       duration: 2000,
       type: CustomSplashType.StaticDuration,
     );
