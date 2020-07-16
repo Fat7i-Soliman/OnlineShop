@@ -20,3 +20,6 @@ const PantsWomen = 'Women-Pants';
 const blazersWomen= 'Women-blazers';
 const shoesWomen = 'Women-shoes';
 const bagsWomen = 'Women-bags';
+
+enum Men{t_shirt,shirt,sweaters,jackets,blazers,Pants,shoes,sunGlasses}
+enum Women{dressesWomen,blousesWomen,beautyWomen,PantsWomen,blazersWomen,shoesWomen,bagsWomen}

@@ -1,6 +1,6 @@
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/login_screen.dart';
-import 'package:e_commerce/screens/user_page.dart';
+import 'file:///C:/Users/Fat7y/IdeaProjects/e_commerce/lib/screens/users/user_page.dart';
 import 'package:e_commerce/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

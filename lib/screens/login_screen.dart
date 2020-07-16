@@ -1,5 +1,5 @@
 import 'package:e_commerce/screens/admin/admin_page.dart';
-import 'package:e_commerce/screens/user_page.dart';
+import 'file:///C:/Users/Fat7y/IdeaProjects/e_commerce/lib/screens/users/user_page.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           if(adminPass == pass){
             try {
-              await auth.logIn(email, pass).whenComplete(() => Navigator.pushNamed(context, AdminPage.id));
+              await auth.logIn(email, pass).whenComplete(() => Navigator.pushNamedAndRemoveUntil(context, AdminPage.id, (route) => false));
               setState(() {
                 loading = false;
               });
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   loading = false;
                 }),
 
-                Navigator.pushNamed(context, UserPage.id)
+                Navigator.pushNamedAndRemoveUntil(context, UserPage.id,(route) => false)
               }
               );
 
@@ -95,6 +95,12 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
+    checkBoxClick(value){
+      setState(() {
+        isAdmin= value;
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       key: _scaffoldState,
@@ -103,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
           inAsyncCall: loading,
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.blueGrey[200],Colors.blueGrey[500]],begin: Alignment.bottomCenter ,end: Alignment.topCenter)
+              gradient: LinearGradient(colors: [Colors.blueGrey[300],Colors.blueGrey[600]],begin: Alignment.bottomCenter ,end: Alignment.topCenter)
             ),
             child: Form(
               key: _globalKey,
@@ -163,18 +169,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     ],
                   ),
-                  SizedBox(height: height*.1,),
-                  GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        isAdmin = !isAdmin ;
-                      });
-                    },
-                    child: Text(
-                        isAdmin==false?'I\'m an admin ': 'I\'m a user',
-                      style: TextStyle(color: Colors.black ,fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
+                  SizedBox(height: height*.02,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Checkbox(value: isAdmin, onChanged: checkBoxClick),
+                      Text('I\'m an admin ',
+                        style: TextStyle(color: Colors.black ,fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                   SizedBox(height: height*.01,),
 

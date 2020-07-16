@@ -5,15 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:e_commerce/constants.dart';
 
 class AddProduct extends StatefulWidget {
   static String id = 'AddProduct';
   @override
   _AddProductState createState() => _AddProductState();
 }
-
-enum Men{t_shirt,shirt,sweaters,jackets,blazers,Pants,shoes,sunGlasses}
-enum Women{dressesWomen,blousesWomen,beautyWomen,PantsWomen,blazersWomen,shoesWomen,bagsWomen}
 
 class _AddProductState extends State<AddProduct> {
   String _error = 'No Error Dectected';
@@ -28,7 +26,7 @@ class _AddProductState extends State<AddProduct> {
   String genderValue ='men';
 
   String _categoryValue = 'Choose a category';
-  var selected  ;
+  bool selected  ;
   
   GlobalKey<FormState> _globalKey = new GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -40,6 +38,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   void initState() {
+    selected=false ;
     chooseCategory();
     super.initState();
   }
@@ -121,31 +120,39 @@ class _AddProductState extends State<AddProduct> {
                         onPressed: (){
                           if(_globalKey.currentState.validate()){
 
-                            setState(() {
-                              adding = true ;
-                            });
-                            _globalKey.currentState.save();
-                            try {
-                              fireStore.addProduct(Product(
-                                  name: name,
-                                  description: des,
-                                  price: price,
-                                  gender: genderValue,
-                                  category: category,
-                                  image: image
-                              ));
-
+                            if(selected) {
                               setState(() {
-                                adding = false ;
+                                adding = true;
                               });
+                              _globalKey.currentState.save();
+                              try {
+                                fireStore.addProduct(Product(
+                                    name: name,
+                                    description: des,
+                                    price: price,
+                                    gender: genderValue,
+                                    category: category,
+                                    image: image
+                                ));
 
-                              _globalKey.currentState.reset();
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Added')));
+                                setState(() {
+                                  adding = false;
+                                });
 
-                            }catch(ex){
-                              print(ex.message);
+                                _globalKey.currentState.reset();
+                                _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(content: Text('Added')));
+                              } catch (ex) {
+                                print(ex.message);
+                              }
+                            }else{
+                              setState(() {
+                                adding = false;
+                              });
+                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                content: Text('choose category'),
+                                duration: Duration(seconds: 1),));
                             }
-
                           }
                         },
                       child: Text('Add Product'),
@@ -202,7 +209,7 @@ class _AddProductState extends State<AddProduct> {
 
   onSelectCat(value){
     setState(() {
-      selected = value ;
+      selected = true ;
       _categoryValue = 'you choose ${_getDisplay(value)}';
       category = _getDisplay(value) ;
 
