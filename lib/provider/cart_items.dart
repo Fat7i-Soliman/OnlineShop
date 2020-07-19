@@ -13,7 +13,7 @@ class CartItems extends ChangeNotifier{
   bool checkProduct(Product product){
     bool check = false ;
     for(var pro in list){
-      if(pro.product == product){
+      if(pro.product.id == product.id){
         check = true ;
         break ;
       }

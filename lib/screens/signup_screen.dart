@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           loading = false ;
                           }),
 
-                            Navigator.pushNamed(context, UserPage.id)
+                            Navigator.pushNamedAndRemoveUntil(context, UserPage.id, (route) => false)
                           });
 
                         }catch(ex){

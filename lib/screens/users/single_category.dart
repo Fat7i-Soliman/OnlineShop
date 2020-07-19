@@ -46,49 +46,46 @@ class _SingleCategoryState extends State<SingleCategory> {
                   itemCount: products.length,
 
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.all(5),
-                      child: GestureDetector(
-                        onTap: () {
-                          viewProduct(products[index]);
-                        },
-                        child: Card(
-                          child: Stack(
-                            children: <Widget>[
-                              Positioned.fill(child: Image(
-                                image: AssetImage('images/0.jpg'),
-                                fit: BoxFit.fill,)),
-                              Positioned(
-                                  bottom: 0,
-                                  child: Opacity(
-                                    opacity: .7,
-                                    child: Container(
-                                      height: 40,
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 5, left: 5),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: <Widget>[
-                                            Text('${products[index].name}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight
-                                                      .bold),),
-                                            Text('\$ ${products[index].price}',)
+                    return GestureDetector(
+                      onTap: () {
+                        viewProduct(products[index]);
+                      },
+                      child: Card(
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned.fill(child: Image(
+                              image: AssetImage('images/0.jpg'),
+                              fit: BoxFit.fill,)),
+                            Positioned(
+                                bottom: 0,
+                                child: Opacity(
+                                  opacity: .7,
+                                  child: Container(
+                                    height: 40,
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: <Widget>[
+                                          Text('${products[index].name}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight
+                                                    .bold),),
+                                          Text('\$ ${products[index].price}',)
 
-                                          ],
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ))
-                            ],
-                          ),
+                                  ),
+                                ))
+                          ],
                         ),
                       ),
                     );

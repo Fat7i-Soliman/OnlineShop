@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           if(adminPass == pass){
             try {
-              await auth.logIn(email, pass).whenComplete(() => Navigator.pushNamedAndRemoveUntil(context, AdminPage.id, (route) => false));
+              await auth.logIn(email, pass);//.whenComplete(() => Navigator.pushNamedAndRemoveUntil(context, AdminPage.id, (route) => false));
               setState(() {
                 loading = false;
               });
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   loading = false;
                 }),
 
-                Navigator.pushNamedAndRemoveUntil(context, UserPage.id,(route) => false)
+               // Navigator.pushNamedAndRemoveUntil(context, UserPage.id,(route) => false)
               }
               );
 

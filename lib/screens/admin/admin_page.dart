@@ -12,6 +12,8 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
+
+  Auth _auth = Auth();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +44,9 @@ class _AdminPageState extends State<AdminPage> {
               ),
               SizedBox(height: 20,),
               RaisedButton(
-                onPressed: ()=> showAlertDialog(context),
+                onPressed: ()async {
+                  await _auth.signOut();
+                },
                 child: Text('Log out'),
               ),
 
@@ -54,30 +58,31 @@ class _AdminPageState extends State<AdminPage> {
 
   }
 
-  logOut(context){
-    Auth().auth.signOut().then((value) => Navigator.pushNamedAndRemoveUntil(context, LoginScreen.id, (route) => false));
+  logOut(context)async{
+    await Auth().auth.signOut().then((value) {
+    });
   }
 
 
-
-  Future showAlertDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        child: AlertDialog(
-          title: Text('Log Out !'),
-          content: Text('Are you sure you want to exit ?'),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  logOut(context);
-                },
-                child: Text('Log out')),
-            FlatButton(onPressed: () {
-              Navigator.pop(context);
-            }, child: Text('cancel')),
-
-          ],
-        )
-    );
-  }
+//  Future showAlertDialog(BuildContext context) async {
+//    return showDialog(
+//        context: context,
+//        child: AlertDialog(
+//          title: Text('Log Out !'),
+//          content: Text('Are you sure you want to exit ?'),
+//          actions: <Widget>[
+//            FlatButton(
+//                onPressed: () {
+//                  Navigator.pop(context);
+//                  logOut(context);
+//                },
+//                child: Text('Log out')),
+//            FlatButton(onPressed: () {
+//              Navigator.pop(context);
+//            }, child: Text('cancel')),
+//
+//          ],
+//        )
+//    );
+//  }
 }

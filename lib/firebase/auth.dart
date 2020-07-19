@@ -23,6 +23,19 @@ class Auth{
   }
 
   Stream<User> get user {
-    return auth.onAuthStateChanged.map((event) => currentUser(event));
+    return auth.onAuthStateChanged.map((event)
+    {
+      print(currentUser(event));
+      return currentUser(event);
+    });
+  }
+
+  Future signOut()async {
+    try{
+      return await auth.signOut();
+    }catch(ex){
+      print('sign out ${ex.message}');
+      return null;
+    }
   }
 }

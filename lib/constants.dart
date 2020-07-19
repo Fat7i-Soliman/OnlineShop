@@ -20,6 +20,16 @@ const PantsWomen = 'Women-Pants';
 const blazersWomen= 'Women-blazers';
 const shoesWomen = 'Women-shoes';
 const bagsWomen = 'Women-bags';
+const orders = 'orders';
+const admins = 'admins';
+const users = 'users';
+const allOrders= 'all orders';
+const orderQuantity = 'quantity';
+const userPhone = 'phone';
+const userAddress = 'address';
+const myOrders = 'my orders';
+const userId = 'userID';
+
 
 enum Men{t_shirt,shirt,sweaters,jackets,blazers,Pants,shoes,sunGlasses}
 enum Women{dressesWomen,blousesWomen,beautyWomen,PantsWomen,blazersWomen,shoesWomen,bagsWomen}

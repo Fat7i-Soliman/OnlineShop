@@ -13,7 +13,7 @@ import 'package:e_commerce/screens/users/details_screen.dart';
 import 'package:e_commerce/screens/users/single_category.dart';
 import 'package:e_commerce/screens/users/user_page.dart';
 import 'package:flutter/material.dart';
-import 'package:custom_splash/custom_splash.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -37,7 +37,7 @@ void main() {
         EditPage.id : (context) => EditPage(),
         UserPage.id : (context)=> UserPage(),
         DetailsScreen.id:(context)=> DetailsScreen(),
-        CartScreen.id: (context)=> CartScreen()
+        CartScreen.id: (context)=> CartScreen(),
       },
       home: MainPage(),
     ),
@@ -51,19 +51,22 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-
-
   @override
   Widget build(BuildContext context) {
 
-    return CustomSplash(
-      imagePath: 'images/icons/shop_app.png',
-      backGroundColor: Colors.blueGrey,
-      animationEffect: 'zoom-in',
-      logoSize: 100,
-      home: Wrapper(),
-      duration: 2000,
-      type: CustomSplashType.StaticDuration,
+    return SplashScreen(
+        seconds: 2,
+        navigateAfterSeconds: Wrapper(),
+        title: new Text('Welcome In Online Shop',style: TextStyle(fontFamily: 'Pacifico',fontSize: 25,color: Colors.white)),
+        image: new Image.asset('images/icons/shop_app.png'),
+        //backgroundColor: Colors.blueGrey,
+        gradientBackground:LinearGradient(colors: [Colors.blueGrey[400],Colors.blueGrey[800]],begin: Alignment.bottomCenter ,end: Alignment.topCenter) ,
+        //styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+        loaderColor: Colors.blueGrey[400]
     );
+
+
   }
+
 }

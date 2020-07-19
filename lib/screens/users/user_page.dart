@@ -1,7 +1,6 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/models/global_productID.dart';
-import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/users/cart_screen.dart';
 import 'package:e_commerce/screens/users/single_category.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +16,7 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
 
   GlobalKey<ScaffoldState> _key  = GlobalKey<ScaffoldState>();
+  Auth _auth = Auth();
   Widget makeMenu(context) {
     var size = MediaQuery.of(context).size ;
 
@@ -47,16 +47,15 @@ class _UserPageState extends State<UserPage> {
           ListTile(
             leading: Icon(Icons.exit_to_app,color: Colors.blueGrey,),
             title: Text('Log out'),
-            onTap: ()=> showAlertDialog(context) ,
+            onTap: ()  {
+                showAlertDialog(context) ;
+            }
           ),
         ],
       ),
     );
   }
 
-  logOut(context){
-    Auth().auth.signOut().then((value) => Navigator.pushNamedAndRemoveUntil(context, LoginScreen.id, (route) => false));
-  }
 
 
 
@@ -69,12 +68,14 @@ class _UserPageState extends State<UserPage> {
           actions: <Widget>[
             FlatButton(
                 onPressed: (){
-                  logOut(context);
+                  Navigator.pop(context);
                 },
-                child: Text('Log out')),
+                child: Text('Cancel')),
             FlatButton(onPressed: (){
               Navigator.pop(context);
-            }, child: Text('cancel')),
+              _auth.signOut() ;
+
+            }, child: Text('Log out')),
 
           ],
         )

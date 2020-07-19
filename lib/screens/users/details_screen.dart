@@ -16,6 +16,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
   int quantity = 1 ;
   Product product = GlobalProductId.instance.get();
   GlobalKey<ScaffoldState>_globalKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print('gender = ${product.gender}');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height ;

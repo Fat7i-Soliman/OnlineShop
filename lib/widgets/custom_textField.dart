@@ -6,7 +6,7 @@ class CustumTextField extends StatelessWidget {
   String txt ;
   final _controller  = TextEditingController();
 
-  CustumTextField({@required this.onClick,@required this.hint,@required this.icon,this.txt});
+  CustumTextField({@required this.onClick,@required this.hint, this.icon,this.txt});
 
   @override
   Widget build(BuildContext context) {
