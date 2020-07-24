@@ -8,17 +8,17 @@ A new Flutter project.
 ![3](https://user-images.githubusercontent.com/20237235/88402416-5ff26e00-cdcb-11ea-8ed8-d940558b8637.png)
 
 # some screens of app
-![4](https://user-images.githubusercontent.com/20237235/88401503-1fdebb80-cdca-11ea-83ca-2fbebd0c0ce2.png)
-![5](https://user-images.githubusercontent.com/20237235/88401515-23724280-cdca-11ea-9e52-073ddb6c82b2.png)
-![6](https://user-images.githubusercontent.com/20237235/88401523-266d3300-cdca-11ea-988d-7481391da7c9.png)
-![7](https://user-images.githubusercontent.com/20237235/88401527-2836f680-cdca-11ea-8c4d-08c8e5b0ee31.png)
-![8](https://user-images.githubusercontent.com/20237235/88401530-29682380-cdca-11ea-855e-faf04ccfc1a3.png)
-![9](https://user-images.githubusercontent.com/20237235/88401535-2a00ba00-cdca-11ea-8131-daa7a541c4f5.png)
+![4](https://user-images.githubusercontent.com/20237235/88402417-608b0480-cdcb-11ea-8c96-60ed0dfb1cb3.png)
+![5](https://user-images.githubusercontent.com/20237235/88402426-6254c800-cdcb-11ea-9883-69f4ef734cc0.png)
+![6](https://user-images.githubusercontent.com/20237235/88402434-641e8b80-cdcb-11ea-9c39-ddf9c4531b6b.png)
+![7](https://user-images.githubusercontent.com/20237235/88402438-65e84f00-cdcb-11ea-97c3-904477641db1.png)
+![8](https://user-images.githubusercontent.com/20237235/88402444-67197c00-cdcb-11ea-810a-450756b87ffd.png)
+![9](https://user-images.githubusercontent.com/20237235/88402446-67b21280-cdcb-11ea-91db-0b72cf8339fc.png)
 
 # admin pages
-![10](https://user-images.githubusercontent.com/20237235/88401540-2a995080-cdca-11ea-8757-1244781b7703.png)
-![11](https://user-images.githubusercontent.com/20237235/88401544-2b31e700-cdca-11ea-8d74-e1d58c88d51c.png)
-![12](https://user-images.githubusercontent.com/20237235/88401545-2b31e700-cdca-11ea-8642-a6a160f145b9.png)
+![10](https://user-images.githubusercontent.com/20237235/88402447-684aa900-cdcb-11ea-9ad5-739622c8c83c.png)
+![11](https://user-images.githubusercontent.com/20237235/88402449-684aa900-cdcb-11ea-8511-cf4b2a47f385.png)
+![12](https://user-images.githubusercontent.com/20237235/88402450-68e33f80-cdcb-11ea-8d84-5d61601d1ea6.png)
 
 
 
