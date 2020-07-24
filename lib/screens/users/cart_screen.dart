@@ -42,7 +42,8 @@ class _CartScreenState extends State<CartScreen> {
                       showSheet(index);
                     },
                     leading: Image(
-                      image: AssetImage('images/0.jpg'),
+                      image: NetworkImage(cartItems[index].product.image),
+                      fit: BoxFit.fill,
                       height: 70,
                       width: 50,
                     ),
@@ -218,38 +219,38 @@ class _CartScreenState extends State<CartScreen> {
         context: context,
         child: AlertDialog(
           title: Text('request the order'),
-          content: Container(
-            height: 250,
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter your location',
-                      labelText: 'Location',
-                      icon: Icon(Icons.add_location)),
-                  controller: location,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter your Phone number',
-                      labelText: 'Phone',
-                      icon: Icon(Icons.phone)),
-                  keyboardType: TextInputType.phone,
-                  controller: phone,
-                ),
-                SizedBox(height: 50),
-                Text(
-                  'Total price : \$${totalCost()}',
-                ),
-              ],
+          content: SingleChildScrollView(
+            child: Container(
+              height: 200,
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Enter your location',
+                        labelText: 'Location',
+                        icon: Icon(Icons.add_location)),
+                    controller: location,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Enter your Phone number',
+                        labelText: 'Phone',
+                        icon: Icon(Icons.phone)),
+                    keyboardType: TextInputType.phone,
+                    controller: phone,
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    'Total price : \$${totalCost()}',
+                  ),
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
             FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  location.dispose();
-                  phone.dispose();
                 },
                 child: Text('Cancel')),
             FlatButton(
@@ -270,7 +271,7 @@ class _CartScreenState extends State<CartScreen> {
     String id;
     await Auth().auth.currentUser().then((value) => id = value.uid);
     Order order =
-        Order(uId: id, address: location, phone: phone, cartItems: cartItems);
+        Order(uId: id, address: location, phone: phone, cartItems: cartItems,done: false,totalPrice: totalCost().toString());
 
     Store().addOrder(order);
   }

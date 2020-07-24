@@ -4,18 +4,20 @@ import 'package:e_commerce/constants.dart';
 class Order {
   String uId ;
   List<ItemCart> cartItems;
-
   String address;
-
+  String totalPrice ;
+  bool done ;
   String phone;
 
-  Order({this.uId,this.address, this.phone, this.cartItems});
+  Order({this.uId,this.address, this.phone, this.cartItems,this.totalPrice,this.done});
 
   Map<String, dynamic> toOrderMap() {
     return {
       userId : uId,
       userPhone: phone,
       userAddress: address,
+      totalCash: totalPrice,
+      delivered : done
     };
   }
 
@@ -27,5 +29,6 @@ class Order {
     }
     return list;
   }
+
 
 }

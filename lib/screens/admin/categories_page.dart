@@ -94,8 +94,8 @@ class _EditProductState extends State<EditProduct> {
                         child: Stack(
                           children: <Widget>[
                             Positioned.fill(child: Image(
-                              image: AssetImage('images/0.jpg'),
-                              fit: BoxFit.fill,)),
+                              image: NetworkImage(products[index].image),
+                              fit: BoxFit.cover,)),
                             Positioned(
                                 bottom: 0,
                                 child: Opacity(

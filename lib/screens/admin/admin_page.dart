@@ -1,9 +1,10 @@
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/screens/admin/add_product.dart';
+import 'package:e_commerce/screens/admin/all_orders.dart';
 import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../login_screen.dart';
+
 class AdminPage extends StatefulWidget {
 
   static String id = 'AdminPage';
@@ -39,7 +40,9 @@ class _AdminPageState extends State<AdminPage> {
               ),
               SizedBox(height: 20,),
               RaisedButton(
-                onPressed: null,
+                onPressed:() {
+                  Navigator.pushNamed(context, AllOrders.id);
+                },
                 child: Text('View Orders'),
               ),
               SizedBox(height: 20,),

@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:e_commerce/firebase/store.dart';
 import 'package:e_commerce/models/product.dart';
 import 'package:e_commerce/widgets/custom_textField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:e_commerce/constants.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AddProduct extends StatefulWidget {
   static String id = 'AddProduct';
@@ -14,9 +17,11 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  String _error = 'No Error Dectected';
 
-  List<Asset> images = List<Asset>();
+  final _picker = ImagePicker();
+  File _image;
+  String _uploadedFileURL;
+  String path ;
 
   List<PopupMenuEntry<Women>> womenCat = List<PopupMenuEntry<Women>>();
   List<PopupMenuEntry<Men>> menCat = List<PopupMenuEntry<Men>>();
@@ -42,6 +47,7 @@ class _AddProductState extends State<AddProduct> {
     chooseCategory();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,51 +106,58 @@ class _AddProductState extends State<AddProduct> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
-
-                    CustumTextField(
-                      hint: 'product image',
-                      onClick: (value){
-                        image = value ;
+                    SizedBox(height: 30,),
+                    ListTile(
+                      leading: Icon(Icons.add_a_photo),
+                      title: Text('Add Product Image'),
+                      subtitle: path!=null? Text(path): Text(""),
+                      onTap: (){
+                        getImage();
                       },
                     ),
                     SizedBox(height: 20,),
-                    ListTile(
-                      leading: Icon(Icons.add_a_photo),
-                      title: Text('Add Product Images'),
-                      onTap: loadAssets,
-                    ),
-                    SizedBox(height: 20,),
+
 
                     RaisedButton(
-                        onPressed: (){
+                        onPressed: () async{
                           if(_globalKey.currentState.validate()){
 
                             if(selected) {
-                              setState(() {
-                                adding = true;
-                              });
-                              _globalKey.currentState.save();
-                              try {
-                                fireStore.addProduct(Product(
-                                    name: name,
-                                    description: des,
-                                    price: price,
-                                    gender: genderValue,
-                                    category: category,
-                                    image: image
-                                ));
+
+                              if(_image!=null){
 
                                 setState(() {
-                                  adding = false;
+                                  adding = true;
                                 });
+                                _globalKey.currentState.save();
+                                await uploadFile();
+                                try {
+                                  fireStore.addProduct(Product(
+                                      name: name,
+                                      description: des,
+                                      price: price,
+                                      gender: genderValue,
+                                      category: category,
+                                      image: _uploadedFileURL,
+                                      path: path
+                                  ));
 
-                                _globalKey.currentState.reset();
-                                _scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(content: Text('Added')));
-                              } catch (ex) {
-                                print(ex.message);
+                                  setState(() {
+                                    adding = false;
+                                  });
+
+                                  reset();
+                                  _scaffoldKey.currentState.showSnackBar(
+                                      SnackBar(content: Text('Added')));
+                                } catch (ex) {
+                                  print(ex.message);
+                                }
+                              }else{
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text('select image !'),
+                                  duration: Duration(milliseconds: 500),));
                               }
+
                             }else{
                               setState(() {
                                 adding = false;
@@ -247,41 +260,48 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
-
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = List<Asset>();
-    String error = 'No Error Dectected';
-
+  Future getImage() async {
     try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
-        enableCamera: true,
-        selectedAssets: images,
-        materialOptions: MaterialOptions(
-          actionBarColor: '#78909C',
-          actionBarTitle: "Shoping online",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
+      final PickedFile pickedFile = await _picker.getImage(
+          source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(pickedFile.path);
+        path = _image.path.split('/').last ;
+
+      });
+
+
+    }catch(ex){
+
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      images = resultList;
-      _error = error;
-    });
-
-    print('images count ${images.length}');
-    print('error $_error');
-
   }
+
+  Future uploadFile() async {
+
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('productImages/$path');
+
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    await storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL.toString();
+      });
+      print('File url $_uploadedFileURL');
+
+    });
+  }
+
+   reset() {
+      _image = null ;
+      _uploadedFileURL = null ;
+      path = null ;
+      _categoryValue = 'Choose a category';
+      selected = false ;
+     _globalKey.currentState.reset();
+   }
+
 }

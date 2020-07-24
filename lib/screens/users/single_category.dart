@@ -32,7 +32,11 @@ class _SingleCategoryState extends State<SingleCategory> {
         stream: _store.getProducts(category),
         builder: (context,snapshot){
           List<Product> products = List();
+          print("data ${snapshot.data}");
+
           if(snapshot.data !=null) {
+            print("data ${snapshot.data}");
+
             for (var doc in snapshot.data.documents) {
               var data = doc.data;
               products.add(_store.toObject(data, doc.documentID));
@@ -54,8 +58,8 @@ class _SingleCategoryState extends State<SingleCategory> {
                         child: Stack(
                           children: <Widget>[
                             Positioned.fill(child: Image(
-                              image: AssetImage('images/0.jpg'),
-                              fit: BoxFit.fill,)),
+                              image: NetworkImage(products[index].image),
+                              fit: BoxFit.cover,)),
                             Positioned(
                                 bottom: 0,
                                 child: Opacity(

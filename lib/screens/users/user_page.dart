@@ -2,6 +2,7 @@ import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/firebase/auth.dart';
 import 'package:e_commerce/models/global_productID.dart';
 import 'package:e_commerce/screens/users/cart_screen.dart';
+import 'package:e_commerce/screens/users/my_orders.dart';
 import 'package:e_commerce/screens/users/single_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class _UserPageState extends State<UserPage> {
           ListTile(
             leading: Icon(Icons.card_travel,color: Colors.blueGrey,),
             title: Text('My orders'),
+            onTap: ()=> Navigator.pushNamed(context, MyOrdersScreen.id),
           ),
           SizedBox(height: 5,child: Divider(thickness: 1,color: Colors.grey,),),
           ListTile(
@@ -86,6 +88,15 @@ class _UserPageState extends State<UserPage> {
 
     return Scaffold(
       key: _key,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed:() => _key.currentState.openDrawer(),),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.shopping_basket,color: Colors.white,) ,onPressed:()=>Navigator.pushNamed(context, CartScreen.id)),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -98,7 +109,7 @@ class _UserPageState extends State<UserPage> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
                     Colors.black.withOpacity(.8),
-                    Colors.black.withOpacity(.1),
+                    Colors.black.withOpacity(.2),
                   ],
                   begin: Alignment.bottomRight)
                 ),
@@ -106,24 +117,11 @@ class _UserPageState extends State<UserPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(icon: Icon(Icons.menu),color: Colors.white, onPressed: (){
-                              _key.currentState.openDrawer();
-                            }),
-                             IconButton(icon: Icon(Icons.shopping_cart),color: Colors.white, onPressed: (){
-                               Navigator.pushNamed(context, CartScreen.id);
-                             })
-                             ],
-                        ),
-                        Text('Our New Products',style: TextStyle(color: Colors.white,fontSize: 26,fontWeight: FontWeight.bold),)
-
-                    ]
-                  ),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                    Text('Our New Products',style: TextStyle(color: Colors.white,fontSize: 26,fontWeight: FontWeight.bold),)
+                  ]),
                 ),
               ),
             ),

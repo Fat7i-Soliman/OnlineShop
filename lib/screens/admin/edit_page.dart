@@ -1,10 +1,12 @@
+import 'dart:io';
 import 'package:e_commerce/firebase/store.dart';
 import 'package:e_commerce/models/global_productID.dart';
 import 'package:e_commerce/models/product.dart';
 import 'package:e_commerce/widgets/custom_textField.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:e_commerce/constants.dart';
 
 
@@ -17,10 +19,10 @@ class EditPage extends StatefulWidget {
 
 class _EditPageState extends State<EditPage> {
 
-  List<Asset> images = List<Asset>();
-  String _error = 'No Error Dectected';
-
   Product product;
+  final _picker = ImagePicker();
+  File _image;
+  String _uploadedFileURL;
 
   List<PopupMenuEntry<Women>> womenCat = List<PopupMenuEntry<Women>>();
   List<PopupMenuEntry<Men>> menCat = List<PopupMenuEntry<Men>>();
@@ -35,7 +37,7 @@ class _EditPageState extends State<EditPage> {
   GlobalKey<FormState> _globalKey = new GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Store fireStore = Store();
-  String name , price, des, category, image ;
+  String name , price, des, category, image, path ;
   bool saving = false ;
 
 
@@ -47,8 +49,8 @@ class _EditPageState extends State<EditPage> {
         content: Text('Are you sure ?'),
         actions: <Widget>[
           FlatButton(
-              onPressed: (){
-            fireStore.deleteProduct(product.id);
+              onPressed: () {
+            fireStore.deleteProduct(product.id,product);
             _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Deleted'),duration: Duration(seconds: 1)));
             Navigator.pop(context);
             Navigator.pop(context);
@@ -67,9 +69,12 @@ class _EditPageState extends State<EditPage> {
   @override
   void initState() {
     product = GlobalProductId.instance.get() ;
-
+    path = product.path;
+    _uploadedFileURL = product.image;
     selected = true ;
+    category = product.category ;
     _categoryValue= 'you choose ${product.category}';
+
     genderValue= product.gender;
     chooseCategory();
     super.initState();
@@ -153,41 +158,36 @@ class _EditPageState extends State<EditPage> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20,),
 
-                        CustumTextField(
-                          txt: product.image,
-
-                          hint: 'product image',
-                          onClick: (value){
-                            image = value ;
-                          },
-                        ),
-                        SizedBox(height: 20,),
+                        SizedBox(height: 30,),
                         ListTile(
                           leading: Icon(Icons.add_a_photo),
-                          title: Text('Add Product Images'),
-                         // onTap: loadAssets,
+                          title: Text('change image '),
+                          subtitle: path !=null? Text(path): Text(""),
+                           onTap: ()=> getImage(),
                         ),
                         SizedBox(height: 20,),
 
                         RaisedButton(
-                          onPressed: (){
+                          onPressed: () async {
                             if(_globalKey.currentState.validate()){
 
                               if(selected) {
                                 setState(() {
                                   saving = true;
                                 });
-
                                 _globalKey.currentState.save();
 
+                                if(_image!=null){
+                                  await uploadFile();
+                                }
                                 product.name = name;
                                 product.price = price;
                                 product.description = des;
                                 product.category = category;
-                                product.image = image;
+                                product.image = _uploadedFileURL;
                                 product.gender = genderValue;
+                                product.path = path ;
 
                                 fireStore.editProduct(product, product.id);
                                 _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -301,4 +301,47 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
+  Future getImage() async {
+
+    try {
+      final PickedFile pickedFile = await _picker.getImage(
+          source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(pickedFile.path);
+        path = _image.path.split('/').last ;
+
+      });
+      print('image done : $path ${_image.path}');
+
+
+    }catch( ex){
+      print('image : ${ex.message}');
+    }
+
+  }
+
+  Future uploadFile() async {
+
+    await FirebaseStorage.instance
+        .ref()
+        .child('productImages/${product.path}').delete().catchError((onError){
+          print('error delete ${onError.message}' );
+    });
+
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('productImages/$path');
+
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    await storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL.toString();
+      });
+      print('File url $_uploadedFileURL');
+
+    });
+  }
 }

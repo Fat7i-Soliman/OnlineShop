@@ -4,12 +4,14 @@ import 'package:e_commerce/models/user.dart';
 import 'package:e_commerce/provider/cart_items.dart';
 import 'package:e_commerce/screens/admin/add_product.dart';
 import 'package:e_commerce/screens/admin/admin_page.dart';
+import 'package:e_commerce/screens/admin/all_orders.dart';
 import 'package:e_commerce/screens/admin/edit_page.dart';
 import 'package:e_commerce/screens/admin/categories_page.dart';
 import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/screens/users/cart_screen.dart';
 import 'package:e_commerce/screens/users/details_screen.dart';
+import 'package:e_commerce/screens/users/my_orders.dart';
 import 'package:e_commerce/screens/users/single_category.dart';
 import 'package:e_commerce/screens/users/user_page.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,8 @@ void main() {
         UserPage.id : (context)=> UserPage(),
         DetailsScreen.id:(context)=> DetailsScreen(),
         CartScreen.id: (context)=> CartScreen(),
+        MyOrdersScreen.id : (context)=> MyOrdersScreen(),
+        AllOrders.id : (context)=> AllOrders()
       },
       home: MainPage(),
     ),

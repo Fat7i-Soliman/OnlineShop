@@ -1,4 +1,8 @@
+import 'package:e_commerce/firebase/auth.dart';
+import 'package:e_commerce/firebase/store.dart';
+import 'package:e_commerce/models/cart_items.dart';
 import 'package:e_commerce/models/global_productID.dart';
+import 'package:e_commerce/models/order.dart';
 import 'package:e_commerce/models/product.dart';
 import 'package:e_commerce/provider/cart_items.dart';
 import 'package:e_commerce/screens/users/cart_screen.dart';
@@ -19,8 +23,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    print('gender = ${product.gender}');
     super.initState();
   }
   @override
@@ -42,7 +44,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           children: [
             Container(
               height: height*.5,
-              child: Image(image: AssetImage('images/0.jpg'),fit: BoxFit.fitHeight,),
+              child: Image(image: NetworkImage(product.image),fit: BoxFit.fill,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 15),
@@ -103,10 +105,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       CartItems items = Provider.of<CartItems>(context,listen: false);
                       bool check = items.checkProduct(product);
                       if(check){
-                        _globalKey.currentState.showSnackBar(SnackBar(content: Text('already exist')));
+                        _globalKey.currentState.showSnackBar(SnackBar(content: Text('already exist'),duration: Duration(milliseconds: 500)));
                       }else{
                         items.addItem(product, quantity);
-                        _globalKey.currentState.showSnackBar(SnackBar(content: Text('Added ')));
+                        _globalKey.currentState.showSnackBar(SnackBar(content: Text('Added '),duration: Duration(milliseconds: 500)));
                       }
                     }),
                   ),
@@ -116,7 +118,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       height: 50,
                       child: FlatButton(
                           onPressed: (){
-                            //todo order the product
+                            showAlertDialog(context);
                           },
                           color: Colors.blueGrey,
                           shape: RoundedRectangleBorder(
@@ -148,5 +150,74 @@ class _DetailsScreenState extends State<DetailsScreen> {
         quantity--;
       });
     }
+  }
+
+  Future showAlertDialog(BuildContext context) async {
+    final location = TextEditingController();
+    final phone = TextEditingController();
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text('request the order'),
+          content: Container(
+            height: 250,
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter your location',
+                      labelText: 'Location',
+                      icon: Icon(Icons.add_location)),
+                  controller: location,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter your Phone number',
+                      labelText: 'Phone',
+                      icon: Icon(Icons.phone)),
+                  keyboardType: TextInputType.phone,
+                  controller: phone,
+                ),
+                SizedBox(height: 50),
+                Text(
+                  'Total price : \$${totalCost()}',
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+
+                },
+                child: Text('Cancel')),
+            FlatButton(
+                onPressed: () {
+                  if (location.text.isNotEmpty && phone.text.isNotEmpty) {
+                    requestOrder(phone.text, location.text);
+                    Navigator.pop(context);
+                    _globalKey.currentState.showSnackBar(
+                        SnackBar(content: Text('Order completed'),duration: Duration(milliseconds: 500),));
+                  }
+                },
+                child: Text('Confirm')),
+          ],
+        ));
+  }
+
+  requestOrder(String phone, String location) async {
+    List<ItemCart> list = List();
+    list.add(ItemCart(product: product,quantity: quantity));
+    String id;
+    await Auth().auth.currentUser().then((value) => id = value.uid);
+    Order order =
+    Order(uId: id, address: location, phone: phone, cartItems: list,done: false,totalPrice: totalCost().toString());
+
+    Store().addOrder(order);
+  }
+
+  int totalCost() {
+    return int.parse(product.price) * quantity ;
   }
 }

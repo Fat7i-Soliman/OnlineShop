@@ -5,7 +5,8 @@ const productDescription= 'productDescription';
 const productCategory= 'productCategory';
 const productImage= 'productImage';
 const productGender = 'productGender';
-const t_shirt = 't-shirt';
+const productPath = 'imagePath';
+const t_shirt = 't_shirt';
 const shirt = 'shirt';
 const sweaters = 'sweaters';
 const jackets = 'jackets';
@@ -29,6 +30,8 @@ const userPhone = 'phone';
 const userAddress = 'address';
 const myOrders = 'my orders';
 const userId = 'userID';
+const totalCash= 'total cash';
+const delivered = 'delivered';
 
 
 enum Men{t_shirt,shirt,sweaters,jackets,blazers,Pants,shoes,sunGlasses}
