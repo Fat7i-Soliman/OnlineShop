@@ -1,6 +1,15 @@
 # e_commerce application
 
-A new Flutter project.
+
+- Firebase Authentication.
+- State Management (Provider , Multi Provider )
+- Firestore
+- Firebase storage
+- Handling Exception
+- Remember user login 
+- Building an Admin Panel in the app
+- Dart streams
+- Stream Builder and Future Builder
 
 # user sign in :
 
